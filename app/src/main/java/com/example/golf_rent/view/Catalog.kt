@@ -15,13 +15,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Book
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Shapes
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -30,22 +28,31 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.golf_rent.data.Catalog.getCatalog
-import com.example.golf_rent.entities.AvailableFields
+import com.example.golf_rent.CatalogViewModel
+import org.koin.androidx.compose.getViewModel
+
 
 @Composable
 fun Catalog() {
 
-    var fields by remember {
-        mutableStateOf<List<AvailableFields>>(listOf<AvailableFields>())
+    val viewModel: CatalogViewModel =getViewModel()
+
+    val fields by viewModel.fields.observeAsState(emptyList())
+    viewModel.fetchData()
+    var showDialog by remember {
+        mutableStateOf(false)
     }
-    LaunchedEffect(Unit) {
-        fields = getCatalog()
+
+    var lcHeight by remember {
+        mutableStateOf(650.dp)
     }
+
+
     Column(
         modifier = Modifier
             .fillMaxSize()
     ) {
+
         Column(modifier = Modifier.padding(4.dp), horizontalAlignment = Alignment.End) {
             Card(modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(0.dp)) {
                 Row(
@@ -77,7 +84,7 @@ fun Catalog() {
             modifier = Modifier
                 .padding(4.dp)
                 .fillMaxWidth()
-                .height(650.dp)
+                .height(lcHeight)
         ) {
             items(fields.size) { i ->
                 Card(
@@ -117,12 +124,23 @@ fun Catalog() {
                 }
             }
         }
+
+        if (showDialog){
+            Filters()
+            lcHeight = 500.dp
+        }else{
+            lcHeight = 650.dp
+        }
         Button(modifier = Modifier
             .padding(4.dp)
             .fillMaxWidth(),
-            onClick = { /*TODO*/ }) {
+            onClick = {
+                showDialog = !showDialog
+            }) {
             Text(text = "Фильтры")
         }
+
+
     }
 
 }

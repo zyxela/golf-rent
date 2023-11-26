@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+   // id ("kotlin-kapt")
 }
 
 android {
@@ -36,6 +37,7 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
     buildFeatures {
         compose = true
     }
@@ -59,6 +61,7 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
+    implementation("com.google.android.datatransport:transport-runtime:3.2.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -70,5 +73,14 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.7.5")
     implementation("androidx.compose.material:material-icons-extended:1.5.4")
 
-    implementation ("org.postgresql:postgresql:42.2.5")
+    implementation("org.postgresql:postgresql:42.2.5")
+
+    implementation("io.insert-koin:koin-android:3.4.3")
+    implementation("io.insert-koin:koin-androidx-compose:3.4.3")
+
+   // kapt("com.google.dagger:hilt-android-compiler:2.40.5")
+
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+    implementation("androidx.compose.runtime:runtime-livedata:1.5.4")
+
 }
