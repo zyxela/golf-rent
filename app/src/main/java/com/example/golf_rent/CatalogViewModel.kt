@@ -14,14 +14,29 @@ class CatalogViewModel(
 ) : ViewModel() {
     val fields = MutableLiveData<List<AvailableFields>>()
 
+
+
     fun fetchData() {
         viewModelScope.launch {
             fields.value = repository.fetchData()
         }
     }
 
-    fun sortByName(){
-
+    fun sortByName(name:String){
+        viewModelScope.launch {
+            fields.value = repository.fetchData(name)
+        }
     }
 
+    fun sortByNameAndDate(name:String, date:String){
+        viewModelScope.launch {
+            fields.value = repository.fetchData(name, date)
+        }
+    }
+
+    fun addField(fId:Int, uId:Int){
+        viewModelScope.launch {
+            repository.addRent(fId, uId)
+        }
+    }
 }

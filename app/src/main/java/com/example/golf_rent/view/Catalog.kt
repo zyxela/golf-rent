@@ -1,5 +1,6 @@
 package com.example.golf_rent.view
 
+import android.content.Context
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -25,6 +26,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -35,10 +37,16 @@ import org.koin.androidx.compose.getViewModel
 @Composable
 fun Catalog() {
 
-    val viewModel: CatalogViewModel =getViewModel()
+    val viewModel: CatalogViewModel = getViewModel()
 
     val fields by viewModel.fields.observeAsState(emptyList())
-    viewModel.fetchData()
+
+    val context = LocalContext.current
+    val prefs = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
+
+    if (fields.isEmpty())
+        viewModel.fetchData()
+
     var showDialog by remember {
         mutableStateOf(false)
     }
@@ -52,6 +60,13 @@ fun Catalog() {
         modifier = Modifier
             .fillMaxSize()
     ) {
+
+        var rent by remember {
+            mutableStateOf(false)
+        }
+
+        if (rent)
+            MyRent()
 
         Column(modifier = Modifier.padding(4.dp), horizontalAlignment = Alignment.End) {
             Card(modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(0.dp)) {
@@ -71,7 +86,7 @@ fun Catalog() {
                         modifier = Modifier
                             .size(40.dp)
                             .clickable {
-                                // isDialogShowed = true
+                                rent = !rent
                             },
                         imageVector = Icons.Outlined.Book, contentDescription = ""
                     )
@@ -116,7 +131,9 @@ fun Catalog() {
                             Modifier.fillMaxWidth(),
                             horizontalAlignment = Alignment.End
                         ) {
-                            Button(onClick = { }) {
+                            Button(onClick = {
+                                viewModel.addField(fields[i].id, prefs.getInt("USER_ID", 0))
+                            }) {
                                 Text(text = "Забронировать")
                             }
                         }
@@ -125,10 +142,10 @@ fun Catalog() {
             }
         }
 
-        if (showDialog){
-            Filters()
+        if (showDialog) {
+            Filters(viewModel)
             lcHeight = 500.dp
-        }else{
+        } else {
             lcHeight = 650.dp
         }
         Button(modifier = Modifier

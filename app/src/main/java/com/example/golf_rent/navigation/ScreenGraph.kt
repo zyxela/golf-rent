@@ -13,7 +13,7 @@ import com.example.golf_rent.view.Registration
 @Composable
 fun ScreenGraph(){
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Screens.CatalogScreen.route){
+    NavHost(navController = navController, startDestination = Screens.AdminPanelScreen.route){
         composable(Screens.MeetingScreen.route){
             Meeting(navController)
         }
