@@ -36,16 +36,16 @@ object Admin {
 
     suspend fun removeAField(id: Int) {
         val db = DatabaseHandler()
-        db.executeQuery("DELETE FROM avaible_fields WHERE id = $id;")
+        db.executeQuery("DELETE FROM users_rent WHERE avaible_fields_id = $id; DELETE FROM avaible_fields WHERE id = $id;")
     }
 
     suspend fun addField(name: String) {
         val db = DatabaseHandler()
-        db.executeQuery("INSERT INTO field (name) VALUES ($name)")
+        db.executeQuery("INSERT INTO field (name) VALUES ('$name');")
     }
 
     suspend fun addAField(field: AvailableFields) {
         val db = DatabaseHandler()
-        db.executeQuery("INSERT INTO field (field_id, date, time) VALUES (${field.fieldId}, ${field.date}, ${field.time})")
+        db.executeQuery("INSERT INTO avaible_fields (field_id, date, time) VALUES (${field.fieldId}, '${field.date}', '${field.time}');")
     }
 }

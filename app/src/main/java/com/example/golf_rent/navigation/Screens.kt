@@ -6,4 +6,5 @@ sealed class Screens(var route:String) {
     object RegistrationScreen:Screens("registration_screen")
     object AdminPanelScreen:Screens("admin_panel")
     object CatalogScreen:Screens("catalog_screen")
+    object MyRentScreen:Screens("my_rent")
 }

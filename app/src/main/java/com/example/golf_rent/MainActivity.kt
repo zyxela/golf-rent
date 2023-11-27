@@ -9,17 +9,10 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.example.golf_rent.module.appModule
 import com.example.golf_rent.navigation.ScreenGraph
-import com.example.golf_rent.repository.CatalogRepository
-import com.example.golf_rent.repository.HistoryRepository
-import com.example.golf_rent.repositoryIml.CatalogRepositoryImpl
-import com.example.golf_rent.repositoryIml.HistoryRepositoryImpl
 import com.example.golf_rent.ui.theme.GolfrentTheme
-import com.example.golf_rent.view.MyRentViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
-import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
-import org.koin.dsl.module
 
 
 class MainActivity : ComponentActivity() {

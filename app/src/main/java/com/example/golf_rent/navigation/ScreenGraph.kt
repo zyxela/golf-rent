@@ -8,12 +8,13 @@ import com.example.golf_rent.view.AdminPanel
 import com.example.golf_rent.view.Authorization
 import com.example.golf_rent.view.Catalog
 import com.example.golf_rent.view.Meeting
+import com.example.golf_rent.view.MyRent
 import com.example.golf_rent.view.Registration
 
 @Composable
 fun ScreenGraph(){
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Screens.AdminPanelScreen.route){
+    NavHost(navController = navController, startDestination = Screens.MeetingScreen.route){
         composable(Screens.MeetingScreen.route){
             Meeting(navController)
         }
@@ -27,7 +28,10 @@ fun ScreenGraph(){
             AdminPanel()
         }
         composable(Screens.CatalogScreen.route){
-            Catalog()
+            Catalog(navController)
+        }
+        composable(Screens.MyRentScreen.route){
+            MyRent(navController)
         }
     }
 }

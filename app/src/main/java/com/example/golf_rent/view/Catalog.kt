@@ -30,12 +30,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.golf_rent.CatalogViewModel
+import com.example.golf_rent.navigation.Screens
 import org.koin.androidx.compose.getViewModel
 
 
 @Composable
-fun Catalog() {
+fun Catalog(navController: NavController) {
 
     val viewModel: CatalogViewModel = getViewModel()
 
@@ -66,7 +68,7 @@ fun Catalog() {
         }
 
         if (rent)
-            MyRent()
+            navController.navigate(Screens.MyRentScreen.route)
 
         Column(modifier = Modifier.padding(4.dp), horizontalAlignment = Alignment.End) {
             Card(modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(0.dp)) {

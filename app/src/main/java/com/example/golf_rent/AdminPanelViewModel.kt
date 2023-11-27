@@ -12,6 +12,9 @@ class AdminPanelViewModel(private val repository: AdminRepository):ViewModel(){
     val fields = MutableLiveData<List<Field>>()
     val aFields = MutableLiveData<List<AvailableFields>>()
 
+    val addFieldDialog = MutableLiveData<Boolean>()
+    val addAFieldDialog = MutableLiveData<Boolean>()
+
     fun getFields(){
         viewModelScope.launch {
             fields.value = repository.fetchFields()
